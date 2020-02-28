@@ -1,0 +1,85 @@
+.header {
+  text-align: center;
+  margin: 5% 0;
+}
+
+.challenge-header {
+  background-color: #EEE;
+  color: #9D2121;
+  padding: 1% 4%;
+  font-weight: 600;
+  margin-top: 5%;
+}
+
+.challenge-header .subheader {
+  font-size: 70%;
+  margin-right: .5em;
+  font-weight: 500;
+}
+
+.challenge {
+  padding-top: 1%;
+  margin-bottom: 5%;
+  text-align: center;
+}
+
+.challenge h5 {
+  margin-bottom: 2em;
+}
+
+#challenge1 .submit {
+  margin-top: .5em;
+}
+
+#challenge2 .submit {
+  margin-top: 3em;
+}
+
+#challenge3 .submit {
+  margin-top: 1em;
+}
+
+.result {
+  font-size: 125%;
+}
+
+.footer {
+  color: #FFF;
+  background-color: #0F0534;
+  text-align: center;
+  padding: 1% 0;
+  margin-top: 5%;
+}
+
+.blockquote {
+  font-style: italic;
+  font-weight: 500;
+}
+
+form {
+  margin-bottom: 0;
+}
+
+/* Overriding the default Skeleton button colors */
+
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #5A7A92;
+  border-color: #5A7A92; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #0F0534;
+}
