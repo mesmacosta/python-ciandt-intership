@@ -23,10 +23,24 @@ def sublist(list_one, list_two):
 
     if list_one == list_two:
         return EQUAL
-    for firest_empty in list_one:
-        for second_two in list_two:
-            # if list_one
-            pass
+    elif len(list_one) <= len(list_two):
+        if list_one != list_two:
+            return UNEQUAL
+        return SUBLIST
+    elif len(list_one) > len(list_two):
+        return SUPERLIST
+    elif list_one != list_two:
+        return UNEQUAL
+
+
+    # elif len(list_one) < len(list_two):
+    #     return SUBLIST
+    # elif len(list_one) > len(list_two):
+    #     return SUPERLIST
+    # elif list_one != list_two:
+    #     return UNEQUAL
+
+
 
     # elif list_one == None and list_one < list_two:
     #     return SUBLIST
@@ -35,6 +49,6 @@ def sublist(list_one, list_two):
     # elif list_one != list_two:
     #     return UNEQUAL
 
-sublist([1, 2, 4], [1, 2, 4])
+sublist([], [1, 2, 4])
 
 
