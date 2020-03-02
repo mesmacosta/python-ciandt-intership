@@ -1,9 +1,14 @@
 import operator
-list_one = []
+list_one = [1, 2, 3]
 list_two = [1, 2, 3]
 
-result = any(map(operator.eq, list_one, list_two))
-print(result)
+list1 = ','.join([str(l1) for l1 in list_one])
+list2 = ','.join([str(l2) for l2 in list_two])
+
+print(list1)
+
+
+# result = any(map(operator.eq, list_one, list_two))
 
 # resultado = [list1 == list2 for list1 in list_one for list2 in list_two]
 # # resultado = [(list1, list2) for list1 in list_one for list2 in list_two]

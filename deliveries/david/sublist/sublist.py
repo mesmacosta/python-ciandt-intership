@@ -20,35 +20,16 @@ UNEQUAL = "unequal"
 
 
 def sublist(list_one, list_two):
+    list_one = ','.join([str(l1) for l1 in list_one])
+    list_tow = ','.join([str(l2) for l2 in list_two])
 
-    if list_one == list_two:
+    if list_one == list_tow:
         return EQUAL
-    elif len(list_one) <= len(list_two):
-        if list_one != list_two:
-            return UNEQUAL
+    elif list_one in list_tow:
         return SUBLIST
-    elif len(list_one) > len(list_two):
+    elif list_tow in list_one:
         return SUPERLIST
-    elif list_one != list_two:
+    else:
         return UNEQUAL
-
-
-    # elif len(list_one) < len(list_two):
-    #     return SUBLIST
-    # elif len(list_one) > len(list_two):
-    #     return SUPERLIST
-    # elif list_one != list_two:
-    #     return UNEQUAL
-
-
-
-    # elif list_one == None and list_one < list_two:
-    #     return SUBLIST
-    # elif list_one >= list_two:
-    #     return SUPERLIST
-    # elif list_one != list_two:
-    #     return UNEQUAL
-
-sublist([], [1, 2, 4])
 
 
