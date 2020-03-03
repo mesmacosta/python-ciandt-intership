@@ -1,0 +1,26 @@
+openapi: '3.0.0'
+info:
+  title: Hangman v1 API
+  version: "1.0.0"
+  description: Flask Sample - Stags Tranning
+
+servers:
+  - url: /api/v1
+    description: Default version
+
+paths:
+{% for item in api %}{% include item %}{% endfor %}
+
+components:
+  schemas:
+    Errors:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Resource not found!'
+        status_code:
+          type: integer
+          example: 404
+{% for item in schemas %}{% include item %}{% endfor %}
+
