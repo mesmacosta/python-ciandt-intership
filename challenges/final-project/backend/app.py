@@ -8,7 +8,7 @@ from jinja2 import Environment, PackageLoader
 from filters import get_all_apis_router, get_entity_fields
 
 
-SWAGGER_PATH = "backend/swagger/"
+SWAGGER_PATH = "swagger/"
 API_PATH = 'endpoints'
 
 app = connexion.App(__name__, specification_dir=SWAGGER_PATH)
