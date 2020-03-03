@@ -1,0 +1,21 @@
+
+  /reset/{game_id}:
+    post:
+      tags: [Reset]
+      summary: Endpoint to Reset a game
+      operationId: endpoints.reset
+      parameters:
+        - name: game_id
+          in: path
+          description: game id start
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Return new game save
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResetGame"
+
