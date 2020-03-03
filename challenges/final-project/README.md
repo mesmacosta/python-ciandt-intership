@@ -34,7 +34,7 @@ Para cada endponint é necessário um arquivo yaml de definição em (backend > 
       'find': ______ __ ______,
       'tries': 0,
       'result': '' # [win|lose]
-	}
+   }
 }
 ```
    - endpoints.handle_guess
