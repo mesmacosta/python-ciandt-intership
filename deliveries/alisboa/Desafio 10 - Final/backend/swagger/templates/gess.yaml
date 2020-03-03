@@ -1,0 +1,27 @@
+
+  /gess/{game_id}:
+    post:
+      tags: [Gess]
+      summary: Endpoint check a gess over the frase
+      operationId: endpoints.handle_guess
+      parameters:
+        - name: gess
+          in: query
+          description: letter to gess in the frase
+          required: true
+          schema:
+            type: string
+            maxLength: 1
+        - name: game_id
+          in: path
+          description: game id to gess
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Return a GessResult
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GessResult"
