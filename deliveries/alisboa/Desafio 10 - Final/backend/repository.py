@@ -3,7 +3,7 @@ import yaml
 __all__ = ['get_game', 'save_game', 'new_game']
 
 def _load():
-    with open('backend/data.yaml', 'r') as file:
+    with open('data.yaml', 'r') as file:
         save = yaml.safe_load(file)
         if not save['games']:
             save['games'] = {}
@@ -12,7 +12,7 @@ def _load():
 
 def _save(data):
     if data:
-        with open('backend/data.yaml', 'w') as file:
+        with open('data.yaml', 'w') as file:
             return yaml.safe_dump(data, file)
 
 def get_game(_id):

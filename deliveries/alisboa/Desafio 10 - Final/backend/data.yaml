@@ -1,2 +1,9 @@
 games:
-
+  '14119136623576710097494137525787555184':
+    guess_word: ciandt
+    tries: 0
+  '293648031122693410159657056493208204656':
+    find: powerful stories raizen
+    result: win
+    tries: 0
+    word: Powerful Stories Raizen

@@ -9,15 +9,17 @@ def new():
     """Endpoint to create new game id"""
     return {'game_id': new_id()}, 200
 
+
 def start(game_id: str):
     """Endpoint to create new game record"""
-    return {}, 200
+    return start_game(game_id), 200
+
 
 def handle_guess(game_id: str, gess: str):
     """Endpoint handle the guess"""
-    return {}, 200
+    return gess_word(game_id, gess), 200
+
 
 def reset(game_id: str):
     """Endpoint to reset"""
     return {}, 200
-

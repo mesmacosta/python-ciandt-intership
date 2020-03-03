@@ -1,5 +1,5 @@
 
-  /start/{game_id}:
+  /reset/{game_id}:
     post:
       tags: [Reset]
       summary: Endpoint to Reset a game
