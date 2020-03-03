@@ -19,6 +19,37 @@
 
 Para cada endponint é necessário um arquivo yaml de definição em (backend > swagger > templates)
 
+### Response
+   - endpoints.new
+``` 
+{ game_id: 76db23b8-5d74-11ea-810b-acde48001122 }
+```
+
+   - endpoints.start
+``` 
+{
+   game_id: 76db23b8-5d74-11ea-810b-acde48001122,
+   data: {
+      'word': Driven By Impact,
+      'find': ______ __ ______,
+      'tries': 0,
+      'result': '' # [win|lose]
+   }
+}
+```
+   - endpoints.handle_guess
+``` 
+{ 
+   game_id: 76db23b8-5d74-11ea-810b-acde48001122,
+   data: {
+      'word': Driven By Impact,
+      'find': D_____ __ ______,
+      'tries': 1,
+      'result': '' ## [win|lose]
+   }
+}
+```
+
 
 ## Iniciando o App
 Na pasta backend execute:
@@ -35,4 +66,5 @@ npm start
 ## Extra:
 Validações:
    - Incluir tempo máximo para terminar
+   - Remover a palavra final da comunicação back-front
    - Remover o uso de arquivo YAML para usar SQLite

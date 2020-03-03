@@ -65,7 +65,7 @@ class Hangman extends Component {
 				gameId: result.game_id,
 				game: result.data,
 				guessed: st.guessed.add(letter),
-				mistake: result.data.traies
+				mistake: result.data.tries
 			}));
 		},
 		(error) => {
