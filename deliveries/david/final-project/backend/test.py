@@ -1,5 +1,5 @@
 import random
-
+import uuid
 
 HANGMAN_DATA = [
 	"Alura",
@@ -30,8 +30,40 @@ HANGMAN_DATA = [
 	"Lean Startup Week"
 ]
 
-
+id = uuid.uuid1().int
 word = random.choice(HANGMAN_DATA)
-print(word)
-retorno = "_".join([char if char in " " else "" for char in word])
-print(retorno)
+# print(word)
+find = "_".join([char if char in " " else "" for char in word])
+
+game_start = {'game_id': id, 'data':
+		{'word': word,
+		 'find': find,
+		 'traies': 0,
+		 'result': ''
+	}}
+
+
+# retorno = [chave == 'data' in chave for chave in game_start.items() ]
+palavra = game_start.get('data').get('word')
+print(palavra)
+
+
+# funcionando
+# novo = dict()
+# for chave, valor in game_start.items():
+# 	if chave == 'data':
+# 		novo[chave] = valor
+#
+# retorno = dict()
+# for chave, valor in novo.items():
+# 	retorno = valor
+#
+# valor_retorno =''
+# for chave, valor in retorno.items():
+# 	if chave == 'word':
+# 		valor_retorno = valor
+# print(valor_retorno)
+#
+# p = input('Informe uma palavra: ')
+# if p in valor_retorno:
+# 	print(True)
