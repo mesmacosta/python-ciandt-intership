@@ -22,4 +22,4 @@ def handle_guess(game_id: str, gess: str):
 
 def reset(game_id: str):
     """Endpoint to reset"""
-    return {}, 200
+    return reset_game(game_id), 200

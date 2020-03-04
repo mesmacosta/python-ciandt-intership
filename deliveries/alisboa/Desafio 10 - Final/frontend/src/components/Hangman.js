@@ -65,7 +65,7 @@ class Hangman extends Component {
 				gameId: result.game_id,
 				game: result.data,
 				guessed: st.guessed.add(letter),
-				mistake: result.data.traies
+				mistake: result.data.tries
 			}));
 		},
 		(error) => {
@@ -88,12 +88,24 @@ class Hangman extends Component {
 
 	resetButton = () => {
 		//TODO usar o endpont RESET
-		let guessed = new Set();
-		guessed.add(" ")
-		this.componentDidMount()
-		this.setState({
-			mistake: 0,
-			guessed: guessed
+		fetch(`/api/v1/reset/${this.state.gameId}`, { method: 'POST'})
+		.then(res => res.json())
+		.then(result => {
+			if(result.success){
+				let guessed = new Set();
+				guessed.add(" ")
+				this.componentDidMount()
+				this.setState({
+					mistake: 0,
+					guessed: guessed
+				});
+			}
+			else {
+				console.error('error to fetch reset game');
+			}
+		},
+		error => {
+			console.error('error to fetch reset game');
 		});
 	};
 

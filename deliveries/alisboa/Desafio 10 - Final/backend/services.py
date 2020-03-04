@@ -4,15 +4,16 @@ import yaml
 import json
 import re
 
-from random import choice
-from repository import save_game, new_game, get_game
+from random import choice, randint
+from repository import save_game, new_game, get_game, delete_game
 
-MAX_TRIRES = 6
+MAX_TRIES = 6
 
 __all__ = ['start_game', 'gess_word', 'reset_game', 'new_id']
 
 
 def gess_word(_id: str, gess: str):
+	gess = gess.lower()
 	current_game = get_game(_id)
 	if current_game['result'] == 'win' or current_game['result'] == 'lose':
 		return {
@@ -30,7 +31,7 @@ def gess_word(_id: str, gess: str):
 			current_game['result'] = 'win'
 	else:
 		current_game['tries'] += 1
-		if current_game['tries'] >= 6:
+		if current_game['tries'] >= MAX_TRIES:
 			current_game['result'] = 'lose'
 
 	saved_game = save_game(_id, current_game)
@@ -43,12 +44,17 @@ def gess_word(_id: str, gess: str):
 def __check_win(find):
 	return all([char != '_' for char in find])
 
+
 def new_id():
-	return uuid.uuid1().int
+	return randint(10000000, 99999999)
 
 
 def reset_game(_id):
-	return 'success'
+	try:
+		delete_game(_id)
+		return {'success': True}
+	except:
+		return {'success': False}
 
 
 def start_game(_id):

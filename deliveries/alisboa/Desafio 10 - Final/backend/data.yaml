@@ -1,9 +1,6 @@
 games:
-  '14119136623576710097494137525787555184':
-    guess_word: ciandt
+  '90657910':
+    find: _____ ____ ____ ______ _______
+    result: ''
     tries: 0
-  '293648031122693410159657056493208204656':
-    find: powerful stories raizen
-    result: win
-    tries: 0
-    word: Powerful Stories Raizen
+    word: Gemba Walk Data driven mindset
