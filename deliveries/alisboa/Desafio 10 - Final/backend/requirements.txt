@@ -1,3 +1,4 @@
+sqlalchemy
 jinja2
 connexion
 pyyaml

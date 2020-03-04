@@ -44,7 +44,7 @@ def gess_word(_id: str, gess: str):
 
 def __has_time_ended(game):
 	time_now = time.time()
-	if time_now - game['time_sec'] > MAX_TIME:
+	if time_now - float(game['time_sec']) > MAX_TIME:
 		return True
 	return False
 
@@ -68,18 +68,18 @@ def start_game(_id):
 	word = choice(HANGMAN_DATA)
 	find = "".join(['_' if char != ' ' else ' ' for char in word])
 	game_created = new_game({
-		_id: {
-			'word': word,
-			'find': find,
-			'tries': 0,
-			'result': '',
-			'time_sec': time.time(),
-			'date': time.asctime()
-		}
+		'id': _id,
+		'word': word,
+		'find': find,
+		'tries': 0,
+		'result': '',
+		'time_sec': time.time(),
+		'date': time.asctime()
+
 	})
 	return {
 		'game_id': _id,
-		'data': game_created[_id]
+		'data': game_created
 	}
 
 
