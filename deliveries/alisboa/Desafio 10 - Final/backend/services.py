@@ -1,5 +1,6 @@
 import datetime
 import uuid
+import time
 import yaml
 import json
 import re
@@ -8,31 +9,31 @@ from random import choice, randint
 from repository import save_game, new_game, get_game, delete_game
 
 MAX_TRIES = 6
-
+MAX_TIME = 50  # SECONDS
 __all__ = ['start_game', 'gess_word', 'reset_game', 'new_id']
 
 
 def gess_word(_id: str, gess: str):
 	gess = gess.lower()
 	current_game = get_game(_id)
-	if current_game['result'] == 'win' or current_game['result'] == 'lose':
-		return {
-			'game_id': _id,
-			'data': current_game
-		}
-	word_indexes = [pos for pos, char in enumerate(current_game['word'].lower()) if char == gess]
-	find_list = list(current_game['find'])
-	if len(word_indexes) > 0:
-		for position in word_indexes:
-			find_list[position] = gess
-		current_game.pop('find')
-		current_game['find'] = "".join(find_list)
-		if __check_win(current_game['find']):
-			current_game['result'] = 'win'
+
+	if __has_time_ended(current_game):
+		current_game['result'] = 'lose'
 	else:
-		current_game['tries'] += 1
-		if current_game['tries'] >= MAX_TRIES:
-			current_game['result'] = 'lose'
+		if not(current_game['result'] == 'win' or current_game['result'] == 'lose'):  #Jogo não terminou
+			word_indexes = [pos for pos, char in enumerate(current_game['word'].lower()) if char == gess]
+			find_list = list(current_game['find'])
+			if len(word_indexes) > 0:
+				for position in word_indexes:
+					find_list[position] = gess
+				current_game.pop('find')
+				current_game['find'] = "".join(find_list)
+				if __check_win(current_game['find']):
+					current_game['result'] = 'win'
+			else:
+				current_game['tries'] += 1
+				if current_game['tries'] >= MAX_TRIES:
+					current_game['result'] = 'lose'
 
 	saved_game = save_game(_id, current_game)
 	return {
@@ -40,6 +41,12 @@ def gess_word(_id: str, gess: str):
 		'data': saved_game
 	}
 
+
+def __has_time_ended(game):
+	time_now = time.time()
+	if time_now - game['time_sec'] > MAX_TIME:
+		return True
+	return False
 
 def __check_win(find):
 	return all([char != '_' for char in find])
@@ -65,7 +72,9 @@ def start_game(_id):
 			'word': word,
 			'find': find,
 			'tries': 0,
-			'result': ''
+			'result': '',
+			'time_sec': time.time(),
+			'date': time.asctime()
 		}
 	})
 	return {

@@ -1,6 +1,8 @@
 games:
-  '90657910':
-    find: _____ ____ ____ ______ _______
-    result: ''
-    tries: 0
-    word: Gemba Walk Data driven mindset
+  '28993236':
+    date: Wed Mar  4 11:35:33 2020
+    find: _u_i_e__ comp_e_i__ poi___
+    result: lose
+    time_sec: 1583332533.8578653
+    tries: 5
+    word: Business Complexity Points
