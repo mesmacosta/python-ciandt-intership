@@ -66,5 +66,6 @@ npm start
 ## Extra:
 Validações:
    - Incluir tempo máximo para terminar
-   - Remover a palavra final da comunicação back-front
    - Remover o uso de arquivo YAML para usar SQLite
+   - Remover a palavra final da comunicação back-front
+
