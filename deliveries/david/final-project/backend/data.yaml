@@ -1,0 +1,29 @@
+games:
+  '2':
+    find: find
+    result: ''
+    tries: 0
+    word: Powerful Stories Cielo
+  '3.2027391248656312e+38':
+    find: ' _ _ _ _ _ _ _ _ _ _ _ '
+    result: ''
+    traies: 0
+    word: Hoshin Kanri
+  '{1.75602210549408026723391615792405235218e+38}':
+    guess_word: my
+    tries: 0
+  '{1}':
+    find: find
+    result: ''
+    tries: 0
+    word: word
+  '{2.68999965796714834463531726508911183378e+38}':
+    find: find
+    result: ''
+    tries: 0
+    word: word
+  '{220937815202020648609842034531195635218}':
+    find: find
+    result: ''
+    tries: 0
+    word: Journey and Ambiguity

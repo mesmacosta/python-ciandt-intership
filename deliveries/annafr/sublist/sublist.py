@@ -13,11 +13,34 @@ You can learn more here: https://en.wikipedia.org/wiki/Enumerated_type
 
 # Possible sublist categories.
 # Change the values as you see fit.
-SUBLIST = None
-SUPERLIST = None
-EQUAL = None
-UNEQUAL = None
+SUBLIST = 1
+SUPERLIST = 2
+EQUAL = 3
+UNEQUAL = 4
+
+
+def compare_list(list_one, list_two, _type):
+
+    if list_one == list_two:
+        return EQUAL
+    list_two_matrix = []
+
+    for item in range(0, len(list_two)):
+        if item + len(list_one) <= len(list_two):
+            list_two_matrix.append(list_two[item: item + len(list_one)])
+
+    if list_one in list_two_matrix:
+        return _type
+    return None
 
 
 def sublist(list_one, list_two):
-    pass
+
+    res = compare_list(list_one, list_two, SUBLIST)
+
+    if res:
+        return res
+    res = compare_list(list_two, list_one, SUPERLIST)
+    if res:
+        return res
+    return UNEQUAL

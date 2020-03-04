@@ -136,3 +136,4 @@ dmypy.json
 #env
 .tool-versions
 .vscode
+node_modules/
