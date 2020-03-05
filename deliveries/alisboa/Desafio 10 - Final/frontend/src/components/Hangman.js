@@ -8,6 +8,8 @@ import step4 from "./images/4.jpg";
 import step5 from "./images/5.jpg";
 import step6 from "./images/6.jpg";
 
+import Timer from "./Timer"
+
 class Hangman extends Component {
 	static defaultProps = {
 		maxWrong: 6,
@@ -163,13 +165,19 @@ class Hangman extends Component {
 				<p className='text-center'>
 					<img src={this.props.images[this.state.mistake]} alt={altText} />
 				</p>
+				{!gameOver ? 
+					<div className = "text-center text-light">
+						<Timer />
+					</div>
+					:
+					""
+				}
 				<p className='text-center text-light'>Guess Ciandt University Content ?</p>
 				<p className='Hangman-word text-center'>
 					{!gameOver ? this.guessedWord() : this.state.answer}{" "}
 				</p>
 
 				<p className='text-center text-warning mt-4'>{gameStat}</p>
-
 				<div>
 					<p className='text-center'>
 						<button className='Hangman-reset' onClick={this.resetButton}>
