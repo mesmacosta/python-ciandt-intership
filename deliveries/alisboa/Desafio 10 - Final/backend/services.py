@@ -15,36 +15,43 @@ __all__ = ['start_game', 'gess_word', 'reset_game', 'new_id']
 
 def gess_word(_id: str, gess: str):
 	gess = gess.lower()
-	current_game = get_game(_id)
+	current_game, session = get_game(_id)
 
 	if __has_time_ended(current_game):
-		current_game['result'] = 'lose'
+		current_game.result = 'lose'
 	else:
-		if not(current_game['result'] == 'win' or current_game['result'] == 'lose'):  #Jogo não terminou
-			word_indexes = [pos for pos, char in enumerate(current_game['word'].lower()) if char == gess]
-			find_list = list(current_game['find'])
+		if not(current_game.result == 'win' or current_game.result == 'lose'):  #Jogo não terminou
+			word_indexes = [pos for pos, char in enumerate(current_game.word.lower()) if char == gess]
+			find_list = list(current_game.find)
 			if len(word_indexes) > 0:
 				for position in word_indexes:
 					find_list[position] = gess
-				current_game.pop('find')
-				current_game['find'] = "".join(find_list)
-				if __check_win(current_game['find']):
-					current_game['result'] = 'win'
+				current_game.find = "".join(find_list)
+				if __check_win(current_game.find):
+					current_game.result = 'win'
 			else:
-				current_game['tries'] += 1
-				if current_game['tries'] >= MAX_TRIES:
-					current_game['result'] = 'lose'
+				current_game.tries += 1
+				if current_game.tries >= MAX_TRIES:
+					current_game.result = 'lose'
 
-	saved_game = save_game(_id, current_game)
+	saved_game = save_game(_id, current_game, session)
+
 	return {
-		'game_id': _id,
-		'data': saved_game
+		'game_id': saved_game.id,
+		'data': {
+			'word': saved_game.word,
+			'find': saved_game.find,
+			'tries': saved_game.tries,
+			'result': saved_game.result,
+			'time_sec': saved_game.time_sec,
+			'date': saved_game.date
+		}
 	}
 
 
 def __has_time_ended(game):
 	time_now = time.time()
-	if time_now - float(game['time_sec']) > MAX_TIME:
+	if time_now - float(game.time_sec) > MAX_TIME:
 		return True
 	return False
 

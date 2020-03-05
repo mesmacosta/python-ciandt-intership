@@ -1,5 +1,5 @@
 import yaml
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String, Float, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -12,8 +12,8 @@ class Game(Base):
     date = Column(String)
     find = Column(String)
     result = Column(String)
-    time_sec = Column(String)
-    tries = Column(String)
+    time_sec = Column(Float)
+    tries = Column(Integer)
     word = Column(String)
 
 
@@ -21,40 +21,26 @@ class Game(Base):
 
 __all__ = ['get_game', 'save_game', 'new_game']
 
-def _load():
-    with open('data.yaml', 'r') as file:
-        save = yaml.safe_load(file)
-        if not save['games']:
-            save['games'] = {}
-    return save
-
-
-def _save(data):
-    if data:
-        with open('data.yaml', 'w') as file:
-            return yaml.safe_dump(data, file)
-
 
 def get_game(_id):
     Session = sessionmaker(engine)
     session = Session()
     current_game_query = session.query(Game).filter(Game.id == _id)
     current_game = current_game_query.one()
-    return current_game.__dict__ # não pode ser dict !
+    return current_game, session 
 
 
-def save_game(_id, game):
-    Session = sessionmaker(engine)
-    session = Session()
+def save_game(_id, game, session):
     session.add(game)
     session.commit()
-    return game.__dict__
+    return game
 
 
 def delete_game(_id):
-    data = _load()
-    del data['games'][_id]
-    _save(data)
+    Session = sessionmaker(engine)
+    session = Session()
+    session.query(Game).filter(Game.id == _id).delete()
+    session.commit()
 
 
 def new_game(new_game):
@@ -64,7 +50,9 @@ def new_game(new_game):
                            find=new_game['find'], tries=new_game['tries'], result=new_game['result'],
                            time_sec=new_game['time_sec'],
                            )
+
     session.add(new_game_create)
+    # Base.metadata.create_all(engine)
     session.commit()
 
     return new_game
