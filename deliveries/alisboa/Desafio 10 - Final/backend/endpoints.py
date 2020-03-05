@@ -12,7 +12,7 @@ def new():
 
 def start(game_id: str):
     """Endpoint to create new game record"""
-    return start_game(game_id), 200
+    return start_game(game_id)
 
 
 def handle_guess(game_id: str, gess: str):

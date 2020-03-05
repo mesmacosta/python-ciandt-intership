@@ -72,6 +72,12 @@ def reset_game(_id):
 
 
 def start_game(_id):
+	if not _id:
+		return {
+			'data': {
+				'status': 'invalid id'
+			}
+		}, 404
 	word = choice(HANGMAN_DATA)
 	find = "".join(['_' if char != ' ' else ' ' for char in word])
 	game_created = new_game({
@@ -87,7 +93,7 @@ def start_game(_id):
 	return {
 		'game_id': _id,
 		'data': game_created
-	}
+	}, 200
 
 
 HANGMAN_DATA = [

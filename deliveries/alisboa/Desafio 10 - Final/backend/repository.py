@@ -27,7 +27,7 @@ def get_game(_id):
     session = Session()
     current_game_query = session.query(Game).filter(Game.id == _id)
     current_game = current_game_query.one()
-    return current_game, session 
+    return current_game, session
 
 
 def save_game(_id, game, session):
