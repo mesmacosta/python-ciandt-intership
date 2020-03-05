@@ -9,7 +9,7 @@ from random import choice, randint
 from repository import save_game, new_game, get_game, delete_game
 
 MAX_TRIES = 6
-MAX_TIME = 50  # SECONDS
+MAX_TIME = 100  # SECONDS
 __all__ = ['start_game', 'gess_word', 'reset_game', 'new_id']
 
 
@@ -39,7 +39,7 @@ def gess_word(_id: str, gess: str):
 	return {
 		'game_id': saved_game.id,
 		'data': {
-			'word': saved_game.word,
+			'word': saved_game.word if saved_game.result == 'win' or saved_game.result == 'lose' else None,
 			'find': saved_game.find,
 			'tries': saved_game.tries,
 			'result': saved_game.result,
@@ -88,8 +88,8 @@ def start_game(_id):
 		'result': '',
 		'time_sec': time.time(),
 		'date': time.asctime()
-
 	})
+	game_created.pop('word')
 	return {
 		'game_id': _id,
 		'data': game_created

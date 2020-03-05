@@ -40,7 +40,6 @@ class Hangman extends Component {
 					.then((result) => {
 						this.setState(st => ({
 							game: result.data,
-							answer: result.data.word.toUpperCase()
 						}));
 					}, 
 				(error) => {
@@ -51,7 +50,7 @@ class Hangman extends Component {
 	}
 
 	guessedWord() {
-		return this.state.answer.split("").map(bingo => (this.state.guessed.has(bingo) ? bingo : "_"));
+		return this.state.game ? this.state.game.find.toUpperCase() : [];
 	}
 
 	handleGuess(evt) {
@@ -65,7 +64,9 @@ class Hangman extends Component {
 				gameId: result.game_id,
 				game: result.data,
 				guessed: st.guessed.add(letter),
-				mistake: result.data.tries
+				mistake: result.data.tries,
+				//Answer só chega se o jogo for perdido ou ganhado
+				answer: result.data.word ? result.data.word.toUpperCase() : ''
 			}));
 		},
 		(error) => {
@@ -117,7 +118,7 @@ class Hangman extends Component {
 
 		if (this.state.game !== undefined) {
 			gameOver = this.state.game.result === 'lose';
-			altText = `${this.state.game.traies} wrong guesses`;
+			altText = `${this.state.game.tries} wrong guesses`;
 			isWinner = this.state.game.result === 'win';
 		}
 		
