@@ -208,9 +208,6 @@ class HangmanTest(unittest.TestCase):
                          }
                          )
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class Game:
     id: str
@@ -229,3 +226,7 @@ class Game:
         self.tries = tries
         self.result = result
         self.time_sec = time_sec
+
+
+if __name__ == "__main__":
+    unittest.main()
