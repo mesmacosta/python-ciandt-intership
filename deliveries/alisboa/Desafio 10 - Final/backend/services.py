@@ -77,7 +77,7 @@ def start_game(_id):
 			'data': {
 				'status': 'invalid id'
 			}
-		}, 404
+		}, 400
 	word = choice(HANGMAN_DATA)
 	find = "".join(['_' if char != ' ' else ' ' for char in word])
 	game_created = new_game({
