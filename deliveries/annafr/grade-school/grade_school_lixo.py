@@ -20,18 +20,18 @@ class School:
             students = students + student
         return students
 
-    def grade(self, grade_number):
+    def grade(self, grade):
         grade_number = str(grade_number)
         return sorted(self.grade_school.get(grade_number, []))
 
 
-#school = School()
+# school = School()
 # school.add_student("Anna", 1)
 # school.add_student("Arthur", 5)
 # school.add_student("Jorge", 2)
 # school.add_student("sadasdas", 2)
 # school.add_student("ZJorgdsadsadase", 2)
 # school.roster()
-# pdb.set_trace()  # breakpoint 3e5b211b //
-
+# # pdb.set_trace()  # breakpoint 3e5b211b //
+#
 # School().grade(1)
