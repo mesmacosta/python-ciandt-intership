@@ -1,5 +1,6 @@
 import random
 import uuid
+import re
 
 HANGMAN_DATA = [
 	"Alura",
@@ -34,6 +35,10 @@ id = uuid.uuid1().int
 word = random.choice(HANGMAN_DATA)
 # print(word)
 find = "_".join([char if char in " " else "" for char in word])
+list_find = list()
+for concat in find:
+	list_find.append(concat)
+print(list_find)
 
 game_start = {'game_id': id, 'data':
 		{'word': word,
@@ -46,6 +51,16 @@ game_start = {'game_id': id, 'data':
 # retorno = [chave == 'data' in chave for chave in game_start.items() ]
 palavra = game_start.get('data').get('word')
 print(palavra)
+print(len(palavra))
+letter = input("Pass letter: ")
+
+for index in range(0, len(palavra)):
+	if letter in palavra[index].lower():
+		alter = palavra[index]
+		list_find[index] = alter
+
+
+print(list_find)
 
 
 # funcionando

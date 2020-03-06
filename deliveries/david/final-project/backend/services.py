@@ -14,14 +14,41 @@ MAX_TRIRES = 6
 __all__ = ['start_game', 'gess_word', 'reset_game']
 
 
-def gess_word(_id: str, gess: str):
-    right_word = ''
-    word = get_game(_id)
-    logging.info(f'Passou aqui', {word})
-    # if gess in word:
-    #     right_word = word
-    return {right_word, _id}
 
+
+def gess_word(_id: str, gess: str):
+    list_find = list()
+    count_tries = 0
+
+    game = get_game(_id)
+    word = game.get('word')
+
+    for p in game.get('find'):
+        list_find.append(p)
+
+    validate_guess_and_return_word(gess, word, list_find)
+
+    result_gess = {_id:
+        {
+            'word': word,
+            'find': list_find,
+            'tries': count_tries,
+            'result': ''
+        }
+    }
+
+
+    return {
+        "game_id": _id,
+        'data': result_gess[_id]
+    }
+
+def validate_guess_and_return_word(gess, word, list_find):
+
+    for index in range(0, len(word)):
+        if gess.lower() in word[index]:
+            letter = word[index]
+            list_find[index] = letter
 
 def new_id():
     return randint(100000, 999999)
@@ -34,15 +61,19 @@ def reset_game(_id):
 def start_game(_id):
     word = choice(HANGMAN_DATA)
     find = "_".join([char if char in " " else "" for char in word])
-    game_start = {'game_id': _id,
-                  'data':
-                      {'word': word,
-                       'find': find,
-                       'tries': 0,
-                       'result': ''
-                       }}
-    return new_game(game_start)
+    game_start = {_id:
+        {
+            'word': word,
+            'find': find,
+            'tries': 0,
+            'result': ''
+        }
+    }
 
+    return {
+        'game_id': _id,
+        'data': new_game(game_start)[_id]
+    }
 
 HANGMAN_DATA = [
     "Alura",
