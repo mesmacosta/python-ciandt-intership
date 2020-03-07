@@ -62,7 +62,61 @@ class HangmanTest(unittest.TestCase):
                          ({
                               'game_id': 31234,
                               'data': {
-                                  'find': 'a___a',
+                                  'find': 'A___a',
+                                  'tries': 0,
+                                  'result': '',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': None
+                              }
+                          }, 200)
+                         )
+
+    @patch("time.time")
+    @patch("repository.sessionmaker")
+    def test_gess_word_is_a_correct_word_and_the_word_is_accentuated(self, mocking_session_maker, mocking_time):
+        mocking_session_maker.return_value = MagicMock()
+        current_game = Game(_id=31234, date='14/11/1990', word='Gestão Financeira',
+                            find='______ __________', tries=0, result='',
+                            time_sec=3213213213,
+                            )
+        mocking_session_maker()().query().filter().one.return_value = current_game
+        mocking_time.return_value = 3213213214
+
+        handle_guess_response = handle_guess(31234, 'a')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': '____ã_ ___a_____a',
+                                  'tries': 0,
+                                  'result': '',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': None
+                              }
+                          }, 200)
+                         )
+
+    @patch("time.time")
+    @patch("repository.sessionmaker")
+    def test_gess_word_is_a_correct_word_and_the_gess_is_accentuated(self, mocking_session_maker, mocking_time):
+        mocking_session_maker.return_value = MagicMock()
+        current_game = Game(_id=31234, date='14/11/1990', word='Gestão Financeira',
+                            find='______ __________', tries=0, result='',
+                            time_sec=3213213213,
+                            )
+        mocking_session_maker()().query().filter().one.return_value = current_game
+        mocking_time.return_value = 3213213214
+
+        handle_guess_response = handle_guess(31234, 'À')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': '____ã_ ___a_____a',
                                   'tries': 0,
                                   'result': '',
                                   'time_sec': 3213213213,

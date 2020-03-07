@@ -1,8 +1,5 @@
-import datetime
-import uuid
+import unicodedata
 import time
-import yaml
-import json
 import re
 
 from random import choice, randint
@@ -15,29 +12,24 @@ __all__ = ['start_game', 'gess_word', 'reset_game', 'new_id']
 
 def gess_word(_id: str, gess: str):
 	if _id is None or not _id:
-		return {
-			'error': 'game_id should be passed'
-		}, 400
+		return {'error': 'game_id should be passed'}, 400
 	if gess is None:
-		return {
-			'error': 'guess must not be null'
-		}, 400
+		return {'error': 'guess must not be null'}, 400
 	if len(gess) != 1:
-		return {
-			'error': 'guess must have 1 character'
-		}, 400
+		return {'error': 'guess must have 1 character'}, 400
 	gess = gess.lower()
+	gess = re.sub("[\u0300-\u036f]", "", unicodedata.normalize('NFD', gess))  # remove accentuation of gess
 	current_game, session = get_game(_id)
-
 	if __has_time_ended(current_game):
 		current_game.result = 'lose'
 	else:
-		if not(current_game.result == 'win' or current_game.result == 'lose'):  #Jogo não terminou
-			word_indexes = [pos for pos, char in enumerate(current_game.word.lower()) if char == gess]
+		if not(current_game.result == 'win' or current_game.result == 'lose'):  # Game not ended
+			word_indexes = [pos for pos, char in enumerate(current_game.word.lower())
+							if re.sub("[\u0300-\u036f]", "", unicodedata.normalize('NFD', char)) == gess]
 			find_list = list(current_game.find)
 			if len(word_indexes) > 0:
 				for position in word_indexes:
-					find_list[position] = gess
+					find_list[position] = current_game.word[position]
 				current_game.find = "".join(find_list)
 				if __check_win(current_game.find):
 					current_game.result = 'win'

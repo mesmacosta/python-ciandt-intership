@@ -20,7 +20,8 @@ class Hangman extends Component {
 		super(props);
 		this.state = { mistake: 0, guessed: new Set(), answer: '' };
 		this.handleGuess = this.handleGuess.bind(this);
-		this.state.guessed.add(" ")
+		this.state.guessed.add(" ");
+		this.timer = <Timer />
 	}
 
 	componentDidMount() {
@@ -89,8 +90,9 @@ class Hangman extends Component {
 		));
 	}
 
+
 	resetButton = () => {
-		//TODO usar o endpont RESET
+		this.timer.clear()
 		fetch(`/api/v1/reset/${this.state.gameId}`, { method: 'POST'})
 		.then(res => res.json())
 		.then(result => {
@@ -165,9 +167,9 @@ class Hangman extends Component {
 				<p className='text-center'>
 					<img src={this.props.images[this.state.mistake]} alt={altText} />
 				</p>
-				{!gameOver ? 
+				{!(gameOver || isWinner) ? 
 					<div className = "text-center text-light">
-						<Timer />
+						{this.timer}
 					</div>
 					:
 					""
