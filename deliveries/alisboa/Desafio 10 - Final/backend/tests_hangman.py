@@ -1,6 +1,6 @@
 import unittest
-
-from services import start_game, gess_word, reset_game, new_id, MAX_TIME
+from services import MAX_TIME
+from endpoints import new, start, handle_guess, reset
 from unittest.mock import patch, MagicMock
 
 
@@ -9,15 +9,15 @@ class HangmanTest(unittest.TestCase):
     @patch("services.randint")
     def test_new_id_must_return_integer_value(self, mock_randint):
         mock_randint.return_value = 10000001
-        id = new_id()
-        self.assertEqual(id, 10000001)
+        response_id = new()
+        self.assertEqual(response_id, ({'game_id': 10000001}, 200))
 
     def test_new_game_with_no_id_should_not_start_and_should_return_400_code(self):
-        self.assertEqual(start_game(_id=""), ({
-                                                  'data': {
-                                                      'status': 'invalid id'
-                                                  }
-                                              }, 400))
+        self.assertEqual(start(""), ({
+                                         'data': {
+                                             'status': 'invalid id'
+                                         }
+                                     }, 400))
 
     @patch("repository.sessionmaker")
     @patch("time.asctime")
@@ -30,7 +30,7 @@ class HangmanTest(unittest.TestCase):
         mocking_time.return_value = 1000
         mocking_asc_time.return_value = "10/11/1990"
         mocking_session_maker.return_value = MagicMock()
-        new_game_create_test = start_game(18902)
+        new_game_create_test = start(18902)
         self.assertEqual(new_game_create_test,
                          ({
                               'game_id': 18902,
@@ -56,10 +56,10 @@ class HangmanTest(unittest.TestCase):
         mocking_session_maker()().query().filter().one.return_value = current_game
         mocking_time.return_value = 3213213214
 
-        gess_word_return = gess_word(31234, 'a')
+        handle_guess_response = handle_guess(31234, 'a')
 
-        self.assertEqual(gess_word_return,
-                         {
+        self.assertEqual(handle_guess_response,
+                         ({
                               'game_id': 31234,
                               'data': {
                                   'find': 'a___a',
@@ -69,7 +69,7 @@ class HangmanTest(unittest.TestCase):
                                   'date': '14/11/1990',
                                   'word': None
                               }
-                          }
+                          }, 200)
                          )
 
     @patch("time.time")
@@ -83,22 +83,21 @@ class HangmanTest(unittest.TestCase):
         mocking_session_maker()().query().filter().one.return_value = current_game
         mocking_time.return_value = 3213213214
 
-        gess_word_return = gess_word(31234, 'b')
+        handle_guess_response = handle_guess(31234, 'b')
 
-        self.assertEqual(gess_word_return,
-                         {
-                             'game_id': 31234,
-                             'data': {
-                                 'find': '_____',
-                                 'tries': 1,
-                                 'result': '',
-                                 'time_sec': 3213213213,
-                                 'date': '14/11/1990',
-                                 'word': None
-                             }
-                         }
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': '_____',
+                                  'tries': 1,
+                                  'result': '',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': None
+                              }
+                          }, 200)
                          )
-
 
     @patch("time.time")
     @patch("repository.sessionmaker")
@@ -111,20 +110,20 @@ class HangmanTest(unittest.TestCase):
         mocking_session_maker()().query().filter().one.return_value = current_game
         mocking_time.return_value = 3213213214
 
-        gess_word_return = gess_word(31234, 'b')
+        handle_guess_response = handle_guess(31234, 'b')
 
-        self.assertEqual(gess_word_return,
-                         {
-                             'game_id': 31234,
-                             'data': {
-                                 'find': '_____',
-                                 'tries': 6,
-                                 'result': 'lose',
-                                 'time_sec': 3213213213,
-                                 'date': '14/11/1990',
-                                 'word': 'Alura'
-                             }
-                         }
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': '_____',
+                                  'tries': 6,
+                                  'result': 'lose',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': 'Alura'
+                              }
+                          }, 200)
                          )
 
     @patch("time.time")
@@ -138,20 +137,20 @@ class HangmanTest(unittest.TestCase):
         mocking_session_maker()().query().filter().one.return_value = current_game
         mocking_time.return_value = 3213213214
 
-        gess_word_return = gess_word(31234, 'r')
+        handle_guess_response = handle_guess(31234, 'r')
 
-        self.assertEqual(gess_word_return,
-                         {
-                             'game_id': 31234,
-                             'data': {
-                                 'find': 'Alura',
-                                 'tries': 1,
-                                 'result': 'win',
-                                 'time_sec': 3213213213,
-                                 'date': '14/11/1990',
-                                 'word': 'Alura'
-                             }
-                         }
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': 'Alura',
+                                  'tries': 1,
+                                  'result': 'win',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': 'Alura'
+                              }
+                          }, 200)
                          )
 
     @patch("time.time")
@@ -165,20 +164,20 @@ class HangmanTest(unittest.TestCase):
         mocking_session_maker()().query().filter().one.return_value = current_game
         mocking_time.return_value = 3213213214 + MAX_TIME
 
-        gess_word_return = gess_word(31234, 'r')
+        handle_guess_response = handle_guess(31234, 'r')
 
-        self.assertEqual(gess_word_return,
-                         {
-                             'game_id': 31234,
-                             'data': {
-                                 'find': 'Alu_a',
-                                 'tries': 1,
-                                 'result': 'lose',
-                                 'time_sec': 3213213213,
-                                 'date': '14/11/1990',
-                                 'word': 'Alura'
-                             }
-                         }
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': 'Alu_a',
+                                  'tries': 1,
+                                  'result': 'lose',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': 'Alura'
+                              }
+                          }, 200)
                          )
 
     @patch("time.time")
@@ -192,20 +191,151 @@ class HangmanTest(unittest.TestCase):
         mocking_session_maker()().query().filter().one.return_value = current_game
         mocking_time.return_value = 3213213214
 
-        gess_word_return = gess_word(31234, 'R')
+        handle_guess_response = handle_guess(31234, 'R')
 
-        self.assertEqual(gess_word_return,
-                         {
-                             'game_id': 31234,
-                             'data': {
-                                 'find': 'Alura',
-                                 'tries': 1,
-                                 'result': 'win',
-                                 'time_sec': 3213213213,
-                                 'date': '14/11/1990',
-                                 'word': 'Alura'
-                             }
-                         }
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': 'Alura',
+                                  'tries': 1,
+                                  'result': 'win',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': 'Alura'
+                              }
+                          }, 200)
+                         )
+
+    @patch("time.time")
+    @patch("repository.sessionmaker")
+    def test_game_already_won_if_a_new_incorrect_gess_word_is_passed_nothing_should_happen(self, mocking_session_maker,
+                                                                                           mocking_time):
+        mocking_session_maker.return_value = MagicMock()
+        current_game = Game(_id=31234, date='14/11/1990', word='Alura',
+                            find='Alura', tries=1, result='win',
+                            time_sec=3213213213,
+                            )
+        mocking_session_maker()().query().filter().one.return_value = current_game
+        mocking_time.return_value = 3213213214
+
+        handle_guess_response = handle_guess(31234, 'J')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': 'Alura',
+                                  'tries': 1,
+                                  'result': 'win',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': 'Alura'
+                              }
+                          }, 200)
+                         )
+
+    @patch("time.time")
+    @patch("repository.sessionmaker")
+    def test_game_already_won_if_a_new_correct_gess_word_is_passed_nothing_should_happen(self, mocking_session_maker,
+                                                                                         mocking_time):
+        mocking_session_maker.return_value = MagicMock()
+        current_game = Game(_id=31234, date='14/11/1990', word='Alura',
+                            find='Alura', tries=1, result='win',
+                            time_sec=3213213213,
+                            )
+        mocking_session_maker()().query().filter().one.return_value = current_game
+        mocking_time.return_value = 3213213214
+
+        handle_guess_response = handle_guess(31234, 'a')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': 'Alura',
+                                  'tries': 1,
+                                  'result': 'win',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': 'Alura'
+                              }
+                          }, 200)
+                         )
+
+    @patch("time.time")
+    @patch("repository.sessionmaker")
+    def test_game_already_lost_if_a_new_incorrect_gess_word_is_passed_nothing_should_happen(self, mocking_session_maker,
+                                                                                            mocking_time):
+        mocking_session_maker.return_value = MagicMock()
+        current_game = Game(_id=31234, date='14/11/1990', word='Alura',
+                            find='Al__a', tries=6, result='lose',
+                            time_sec=3213213213,
+                            )
+        mocking_session_maker()().query().filter().one.return_value = current_game
+        mocking_time.return_value = 3213213214
+
+        handle_guess_response = handle_guess(31234, 'J')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': 'Al__a',
+                                  'tries': 6,
+                                  'result': 'lose',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': 'Alura'
+                              }
+                          }, 200)
+                         )
+
+    @patch("time.time")
+    @patch("repository.sessionmaker")
+    def test_game_already_lost_if_a_new_correct_gess_word_is_passed_nothing_should_happen(self, mocking_session_maker,
+                                                                                          mocking_time):
+        mocking_session_maker.return_value = MagicMock()
+        current_game = Game(_id=31234, date='14/11/1990', word='Alura',
+                            find='Al__a', tries=6, result='lose',
+                            time_sec=3213213213,
+                            )
+        mocking_session_maker()().query().filter().one.return_value = current_game
+        mocking_time.return_value = 3213213214
+
+        handle_guess_response = handle_guess(31234, 'u')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'game_id': 31234,
+                              'data': {
+                                  'find': 'Al__a',
+                                  'tries': 6,
+                                  'result': 'lose',
+                                  'time_sec': 3213213213,
+                                  'date': '14/11/1990',
+                                  'word': 'Alura'
+                              }
+                          }, 200)
+                         )
+
+    @patch("repository.sessionmaker")
+    def test_reset_game_must_return_success_if_everything_is_ok(self, mocking_session_maker):
+        mocking_session_maker.return_value = MagicMock()
+        self.assertEqual(reset(325),
+                         ({
+                              'success': True
+                          }, 200)
+                         )
+
+    @patch("repository.sessionmaker")
+    def test_reset_game_must_return_not_success_if_everything_if_a_exception_happens(self, mocking_session_maker):
+        mocking_session_maker.side_effect = MagicMock()
+        mocking_session_maker()().query().filter().delete.side_effect = Exception("Test")
+        self.assertEqual(reset(325),
+                         ({
+                              'success': False
+                          }, 400)
                          )
 
 
@@ -230,3 +360,15 @@ class Game:
 
 if __name__ == "__main__":
     unittest.main()
+
+"""
+Instructions for viewing the coverage of the tests:
+
+pip install coverage
+
+coverage run -m unittest tests_hangman.py
+coverage report --omit */venv/*
+
+to get html page:
+coverage html
+"""

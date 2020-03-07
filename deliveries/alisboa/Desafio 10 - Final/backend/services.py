@@ -66,9 +66,9 @@ def new_id():
 def reset_game(_id):
 	try:
 		delete_game(_id)
-		return {'success': True}
+		return {'success': True}, 200
 	except:
-		return {'success': False}
+		return {'success': False}, 400
 
 
 def start_game(_id):

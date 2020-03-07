@@ -1,7 +1,3 @@
-"""
-Hangman API methods
-"""
-import uuid
 from services import start_game, gess_word, reset_game, new_id
 
 
@@ -22,4 +18,4 @@ def handle_guess(game_id: str, gess: str):
 
 def reset(game_id: str):
     """Endpoint to reset"""
-    return reset_game(game_id), 200
+    return reset_game(game_id)
