@@ -338,6 +338,57 @@ class HangmanTest(unittest.TestCase):
                           }, 400)
                          )
 
+    def test_gess_with_null_word_should_return_error(self):
+        handle_guess_response = handle_guess(31234, None)
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'error': 'guess must not be null'
+                          }, 400)
+                         )
+
+    def test_gess_being_a_string_with_lenght_greater_than_1_should_return_error(self):
+        handle_guess_response = handle_guess(31234, 'abc')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'error': 'guess must have 1 character'
+                          }, 400)
+                         )
+
+    def test_gess_being_a_string_with_lenght_lesser_than_1_should_return_error(self):
+        handle_guess_response = handle_guess(31234, '')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'error': 'guess must have 1 character'
+                          }, 400)
+                         )
+
+    def test_gess_having_null_id_should_return_error(self):
+        handle_guess_response = handle_guess(None, 'a')
+
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'error': 'game_id should be passed'
+                          }, 400)
+                         )
+
+    def test_gess_having_id_undefined_or_0_should_return_error(self):
+        handle_guess_response = handle_guess(0, 'a')
+        handle_guess_response2 = handle_guess('', 'a')
+        self.assertEqual(handle_guess_response,
+                         ({
+                              'error': 'game_id should be passed'
+                          }, 400)
+                         )
+        self.assertEqual(handle_guess_response2,
+                         ({
+                              'error': 'game_id should be passed'
+                          }, 400)
+                         )
+
+
 
 class Game:
     id: str

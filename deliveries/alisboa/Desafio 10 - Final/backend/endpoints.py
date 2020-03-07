@@ -13,7 +13,7 @@ def start(game_id: str):
 
 def handle_guess(game_id: str, gess: str):
     """Endpoint handle the guess"""
-    return gess_word(game_id, gess), 200
+    return gess_word(game_id, gess)
 
 
 def reset(game_id: str):

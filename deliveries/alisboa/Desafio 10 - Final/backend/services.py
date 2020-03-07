@@ -14,6 +14,18 @@ __all__ = ['start_game', 'gess_word', 'reset_game', 'new_id']
 
 
 def gess_word(_id: str, gess: str):
+	if _id is None or not _id:
+		return {
+			'error': 'game_id should be passed'
+		}, 400
+	if gess is None:
+		return {
+			'error': 'guess must not be null'
+		}, 400
+	if len(gess) != 1:
+		return {
+			'error': 'guess must have 1 character'
+		}, 400
 	gess = gess.lower()
 	current_game, session = get_game(_id)
 
@@ -36,7 +48,7 @@ def gess_word(_id: str, gess: str):
 
 	saved_game = save_game(_id, current_game, session)
 
-	return {
+	return ({
 		'game_id': saved_game.id,
 		'data': {
 			'word': saved_game.word if saved_game.result == 'win' or saved_game.result == 'lose' else None,
@@ -46,7 +58,7 @@ def gess_word(_id: str, gess: str):
 			'time_sec': saved_game.time_sec,
 			'date': saved_game.date
 		}
-	}
+	}, 200)
 
 
 def __has_time_ended(game):
