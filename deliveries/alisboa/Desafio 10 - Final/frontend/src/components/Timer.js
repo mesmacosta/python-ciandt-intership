@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
 
+const inicialState = {
+    minutes: 1,
+    seconds: 40,
+}
+
 export default class Timer extends Component {
-    state = {
-        minutes: 1,
-        seconds: 40,
-    }
+    state = inicialState
 
     componentDidMount() {
         this.myInterval = setInterval(() => {
+            if(this.props.reset[this.props.reset.length - 1]){
+                this.clear();
+                return;
+            }
             const { seconds, minutes } = this.state
 
             if (seconds > 0) {
@@ -33,7 +39,7 @@ export default class Timer extends Component {
     }
 
     clear(){
-        this.setState(this.state);
+        this.setState(inicialState);
     }
 
     render() {
