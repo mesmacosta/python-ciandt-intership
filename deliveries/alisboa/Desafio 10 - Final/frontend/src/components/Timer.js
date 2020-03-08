@@ -10,10 +10,6 @@ export default class Timer extends Component {
 
     componentDidMount() {
         this.myInterval = setInterval(() => {
-            if(this.props.reset[this.props.reset.length - 1]){
-                this.clear();
-                return;
-            }
             const { seconds, minutes } = this.state
 
             if (seconds > 0) {
@@ -33,6 +29,12 @@ export default class Timer extends Component {
             } 
         }, 1000)
     }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.reset !== this.props.reset){
+            this.clear()
+        }
+      }
 
     componentWillUnmount() {
         clearInterval(this.myInterval)

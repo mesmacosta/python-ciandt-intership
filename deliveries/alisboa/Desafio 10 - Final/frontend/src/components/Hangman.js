@@ -21,7 +21,7 @@ class Hangman extends Component {
 		this.state = { mistake: 0, guessed: new Set(), answer: '' };
 		this.handleGuess = this.handleGuess.bind(this);
 		this.state.guessed.add(" ");
-		this.resetTimer = [true]
+		this.resetTimer = false
 	}
 
 	componentDidMount() {
@@ -44,9 +44,7 @@ class Hangman extends Component {
 						this.setState(st => ({
 							game: result.data,
 						}));
-						setTimeout(function() {
-							this.startTimer();
-						}.bind(this), 1005)
+						this.resetTime()
 					}, 
 				(error) => {
 					console.error('error to fetch start game!')
@@ -95,7 +93,6 @@ class Hangman extends Component {
 
 
 	resetButton = () => {
-		this.stopTimer();
 		fetch(`/api/v1/reset/${this.state.gameId}`, { method: 'POST'})
 		.then(res => res.json())
 		.then(result => {
@@ -117,12 +114,8 @@ class Hangman extends Component {
 		});
 	};
 
-	stopTimer = () => {
-		this.resetTimer.push(true);
-	}
-
-	startTimer = () => {
-		this.resetTimer.push(false);
+	resetTime = () => {
+		this.resetTimer = !this.resetTimer;
 	}
 
 	render() {
@@ -180,7 +173,7 @@ class Hangman extends Component {
 				</p>
 				{!(gameOver || isWinner) ? 
 					<div className = "text-center text-light">
-						<Timer reset = {this.resetTimer}/>
+						<Timer reset = {this.resetTimer} />
 					</div>
 					:
 					""
