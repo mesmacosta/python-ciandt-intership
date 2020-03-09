@@ -1,0 +1,13 @@
+
+  /new:
+    get:
+      tags: [New]
+      summary: Endpoint to create new ID to Game
+      operationId: endpoints.new
+      responses:
+        200:
+          description: Return new game
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewGame"
