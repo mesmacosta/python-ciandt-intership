@@ -1,0 +1,20 @@
+
+  /start/{game_id}/:
+    post:
+      tags: [Start]
+      summary: Endpoint to Start a New Game
+      operationId: endpoints.start
+      parameters:
+        - name: game_id
+          in: path
+          description: game id to gess
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Return new game save
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartGame"

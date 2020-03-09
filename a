@@ -1,0 +1,448 @@
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 117b75b4..ec8fc32a 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -109,6 +109,7 @@[m [mvenv/[m
+ ENV/[m
+ env.bak/[m
+ venv.bak/[m
+[32m+[m[32mnode_modules/[m
+ [m
+ # Spyder project settings[m
+ .spyderproject[m
+[36m@@ -136,4 +137,3 @@[m [mdmypy.json[m
+ #env[m
+ .tool-versions[m
+ .vscode[m
+[31m-node_modules/[m
+[1mdiff --git a/challenges/final-project/README.md b/challenges/final-project/README.md[m
+[1mindex 3f0883d2..87dbba8e 100644[m
+[1m--- a/challenges/final-project/README.md[m
+[1m+++ b/challenges/final-project/README.md[m
+[36m@@ -19,37 +19,6 @@[m
+ [m
+ Para cada endponint é necessário um arquivo yaml de definição em (backend > swagger > templates)[m
+ [m
+[31m-### Response[m
+[31m-   - endpoints.new[m
+[31m-``` [m
+[31m-{ game_id: 76db23b8-5d74-11ea-810b-acde48001122 }[m
+[31m-```[m
+[31m-[m
+[31m-   - endpoints.start[m
+[31m-``` [m
+[31m-{[m
+[31m-   game_id: 76db23b8-5d74-11ea-810b-acde48001122,[m
+[31m-   data: {[m
+[31m-      'word': Driven By Impact,[m
+[31m-      'find': ______ __ ______,[m
+[31m-      'tries': 0,[m
+[31m-      'result': '' # [win|lose][m
+[31m-   }[m
+[31m-}[m
+[31m-```[m
+[31m-   - endpoints.handle_guess[m
+[31m-``` [m
+[31m-{ [m
+[31m-   game_id: 76db23b8-5d74-11ea-810b-acde48001122,[m
+[31m-   data: {[m
+[31m-      'word': Driven By Impact,[m
+[31m-      'find': D_____ __ ______,[m
+[31m-      'tries': 1,[m
+[31m-      'result': '' ## [win|lose][m
+[31m-   }[m
+[31m-}[m
+[31m-```[m
+[31m-[m
+ [m
+ ## Iniciando o App[m
+ Na pasta backend execute:[m
+[36m@@ -67,5 +36,3 @@[m [mnpm start[m
+ Validações:[m
+    - Incluir tempo máximo para terminar[m
+    - Remover o uso de arquivo YAML para usar SQLite[m
+[31m-   - Remover a palavra final da comunicação back-front[m
+[31m-[m
+[1mdiff --git a/challenges/final-project/backend/repository.py b/challenges/final-project/backend/repository.py[m
+[1mindex b9d6e5da..366ced8f 100644[m
+[1m--- a/challenges/final-project/backend/repository.py[m
+[1m+++ b/challenges/final-project/backend/repository.py[m
+[36m@@ -3,7 +3,7 @@[m [mimport yaml[m
+ __all__ = ['get_game', 'save_game', 'new_game'][m
+ [m
+ def _load():[m
+[31m-    with open('data.yaml', 'r') as file:[m
+[32m+[m[32m    with open('backend/data.yaml', 'r') as file:[m
+         save = yaml.safe_load(file)[m
+         if not save['games']:[m
+             save['games'] = {}[m
+[36m@@ -12,7 +12,7 @@[m [mdef _load():[m
+ [m
+ def _save(data):[m
+     if data:[m
+[31m-        with open('data.yaml', 'w') as file:[m
+[32m+[m[32m        with open('backend/data.yaml', 'w') as file:[m
+             return yaml.safe_dump(data, file)[m
+ [m
+ def get_game(_id):[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/acorn b/challenges/final-project/frontend/node_modules/.bin/acorn[m
+[1mdeleted file mode 120000[m
+[1mindex cf767603..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/acorn[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../acorn/bin/acorn[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/ansi-html b/challenges/final-project/frontend/node_modules/.bin/ansi-html[m
+[1mdeleted file mode 120000[m
+[1mindex 7e3f8fb8..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/ansi-html[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../ansi-html/bin/ansi-html[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/atob b/challenges/final-project/frontend/node_modules/.bin/atob[m
+[1mdeleted file mode 120000[m
+[1mindex a68344a3..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/atob[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../atob/bin/atob.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/autoprefixer b/challenges/final-project/frontend/node_modules/.bin/autoprefixer[m
+[1mdeleted file mode 120000[m
+[1mindex e876d81c..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/autoprefixer[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../autoprefixer/bin/autoprefixer[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/babylon b/challenges/final-project/frontend/node_modules/.bin/babylon[m
+[1mdeleted file mode 120000[m
+[1mindex c2adc01b..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/babylon[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../babylon/bin/babylon.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/browserslist b/challenges/final-project/frontend/node_modules/.bin/browserslist[m
+[1mdeleted file mode 120000[m
+[1mindex 3cd991b2..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/browserslist[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../browserslist/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/css-blank-pseudo b/challenges/final-project/frontend/node_modules/.bin/css-blank-pseudo[m
+[1mdeleted file mode 120000[m
+[1mindex 6b1de718..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/css-blank-pseudo[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../css-blank-pseudo/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/css-has-pseudo b/challenges/final-project/frontend/node_modules/.bin/css-has-pseudo[m
+[1mdeleted file mode 120000[m
+[1mindex 314165fa..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/css-has-pseudo[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../css-has-pseudo/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/css-prefers-color-scheme b/challenges/final-project/frontend/node_modules/.bin/css-prefers-color-scheme[m
+[1mdeleted file mode 120000[m
+[1mindex 589d1d13..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/css-prefers-color-scheme[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../css-prefers-color-scheme/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/cssesc b/challenges/final-project/frontend/node_modules/.bin/cssesc[m
+[1mdeleted file mode 120000[m
+[1mindex 487b6890..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/cssesc[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../cssesc/bin/cssesc[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/detect b/challenges/final-project/frontend/node_modules/.bin/detect[m
+[1mdeleted file mode 120000[m
+[1mindex 617e569c..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/detect[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../detect-port-alt/bin/detect-port[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/detect-port b/challenges/final-project/frontend/node_modules/.bin/detect-port[m
+[1mdeleted file mode 120000[m
+[1mindex 617e569c..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/detect-port[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../detect-port-alt/bin/detect-port[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/errno b/challenges/final-project/frontend/node_modules/.bin/errno[m
+[1mdeleted file mode 120000[m
+[1mindex 5a98e539..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/errno[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../errno/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/escodegen b/challenges/final-project/frontend/node_modules/.bin/escodegen[m
+[1mdeleted file mode 120000[m
+[1mindex 01a7c325..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/escodegen[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../escodegen/bin/escodegen.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/esgenerate b/challenges/final-project/frontend/node_modules/.bin/esgenerate[m
+[1mdeleted file mode 120000[m
+[1mindex 7d0293e6..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/esgenerate[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../escodegen/bin/esgenerate.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/eslint b/challenges/final-project/frontend/node_modules/.bin/eslint[m
+[1mdeleted file mode 120000[m
+[1mindex 810e4bcb..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/eslint[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../eslint/bin/eslint.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/esparse b/challenges/final-project/frontend/node_modules/.bin/esparse[m
+[1mdeleted file mode 120000[m
+[1mindex 7423b18b..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/esparse[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../esprima/bin/esparse.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/esvalidate b/challenges/final-project/frontend/node_modules/.bin/esvalidate[m
+[1mdeleted file mode 120000[m
+[1mindex 16069eff..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/esvalidate[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../esprima/bin/esvalidate.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/handlebars b/challenges/final-project/frontend/node_modules/.bin/handlebars[m
+[1mdeleted file mode 120000[m
+[1mindex fb7d090f..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/handlebars[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../handlebars/bin/handlebars[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/he b/challenges/final-project/frontend/node_modules/.bin/he[m
+[1mdeleted file mode 120000[m
+[1mindex 2a8eb5e0..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/he[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../he/bin/he[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/html-minifier b/challenges/final-project/frontend/node_modules/.bin/html-minifier[m
+[1mdeleted file mode 120000[m
+[1mindex fdff5987..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/html-minifier[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../html-minifier/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/import-local-fixture b/challenges/final-project/frontend/node_modules/.bin/import-local-fixture[m
+[1mdeleted file mode 120000[m
+[1mindex ff4b1048..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/import-local-fixture[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../import-local/fixtures/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/is-ci b/challenges/final-project/frontend/node_modules/.bin/is-ci[m
+[1mdeleted file mode 120000[m
+[1mindex fe6aca6f..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/is-ci[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../is-ci/bin.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/jest b/challenges/final-project/frontend/node_modules/.bin/jest[m
+[1mdeleted file mode 120000[m
+[1mindex 61c18615..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/jest[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../jest/bin/jest.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/jest-runtime b/challenges/final-project/frontend/node_modules/.bin/jest-runtime[m
+[1mdeleted file mode 120000[m
+[1mindex ec00171e..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/jest-runtime[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../jest-runtime/bin/jest-runtime.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/js-yaml b/challenges/final-project/frontend/node_modules/.bin/js-yaml[m
+[1mdeleted file mode 120000[m
+[1mindex 9dbd010d..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/js-yaml[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../js-yaml/bin/js-yaml.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/jsesc b/challenges/final-project/frontend/node_modules/.bin/jsesc[m
+[1mdeleted file mode 120000[m
+[1mindex 7237604c..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/jsesc[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../jsesc/bin/jsesc[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/json5 b/challenges/final-project/frontend/node_modules/.bin/json5[m
+[1mdeleted file mode 120000[m
+[1mindex 217f3798..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/json5[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../json5/lib/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/loose-envify b/challenges/final-project/frontend/node_modules/.bin/loose-envify[m
+[1mdeleted file mode 120000[m
+[1mindex ed9009c5..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/loose-envify[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../loose-envify/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/miller-rabin b/challenges/final-project/frontend/node_modules/.bin/miller-rabin[m
+[1mdeleted file mode 120000[m
+[1mindex c175fe9f..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/miller-rabin[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../miller-rabin/bin/miller-rabin[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/mime b/challenges/final-project/frontend/node_modules/.bin/mime[m
+[1mdeleted file mode 120000[m
+[1mindex fbb7ee0e..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/mime[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../mime/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/mkdirp b/challenges/final-project/frontend/node_modules/.bin/mkdirp[m
+[1mdeleted file mode 120000[m
+[1mindex 017896ce..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/mkdirp[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../mkdirp/bin/cmd.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/multicast-dns b/challenges/final-project/frontend/node_modules/.bin/multicast-dns[m
+[1mdeleted file mode 120000[m
+[1mindex 801fc526..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/multicast-dns[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../multicast-dns/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/parser b/challenges/final-project/frontend/node_modules/.bin/parser[m
+[1mdeleted file mode 120000[m
+[1mindex ce7bf97e..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/parser[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../@babel/parser/bin/babel-parser.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/react-scripts b/challenges/final-project/frontend/node_modules/.bin/react-scripts[m
+[1mdeleted file mode 120000[m
+[1mindex fe0fb709..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/react-scripts[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../react-scripts/bin/react-scripts.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/regexp-tree b/challenges/final-project/frontend/node_modules/.bin/regexp-tree[m
+[1mdeleted file mode 120000[m
+[1mindex b60be154..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/regexp-tree[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../regexp-tree/bin/regexp-tree[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/regjsparser b/challenges/final-project/frontend/node_modules/.bin/regjsparser[m
+[1mdeleted file mode 120000[m
+[1mindex 91cec777..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/regjsparser[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../regjsparser/bin/parser[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/rimraf b/challenges/final-project/frontend/node_modules/.bin/rimraf[m
+[1mdeleted file mode 120000[m
+[1mindex 4cd49a49..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/rimraf[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../rimraf/bin.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/sane b/challenges/final-project/frontend/node_modules/.bin/sane[m
+[1mdeleted file mode 120000[m
+[1mindex ab4163ba..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/sane[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../sane/src/cli.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/semver b/challenges/final-project/frontend/node_modules/.bin/semver[m
+[1mdeleted file mode 120000[m
+[1mindex 5aaadf42..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/semver[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../semver/bin/semver.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/sha.js b/challenges/final-project/frontend/node_modules/.bin/sha.js[m
+[1mdeleted file mode 120000[m
+[1mindex 3c761051..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/sha.js[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../sha.js/bin.js[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/sshpk-conv b/challenges/final-project/frontend/node_modules/.bin/sshpk-conv[m
+[1mdeleted file mode 120000[m
+[1mindex a2a295c8..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/sshpk-conv[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../sshpk/bin/sshpk-conv[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/sshpk-sign b/challenges/final-project/frontend/node_modules/.bin/sshpk-sign[m
+[1mdeleted file mode 120000[m
+[1mindex 766b9b3a..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/sshpk-sign[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../sshpk/bin/sshpk-sign[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/sshpk-verify b/challenges/final-project/frontend/node_modules/.bin/sshpk-verify[m
+[1mdeleted file mode 120000[m
+[1mindex bfd7e3ad..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/sshpk-verify[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../sshpk/bin/sshpk-verify[m
+\ No newline at end of file[m
+[1mdiff --git a/challenges/final-project/frontend/node_modules/.bin/svgo b/challenges/final-project/frontend/node_modules/.bin/svgo[m
+[1mdeleted file mode 120000[m
+[1mindex d6a228b7..00000000[m
+[1m--- a/challenges/final-project/frontend/node_modules/.bin/svgo[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-../svgo/bin/svgo[m
+\ No newline at end of file[m
+[1mdiff --git a/

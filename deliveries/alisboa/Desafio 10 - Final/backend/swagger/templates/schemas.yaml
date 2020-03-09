@@ -1,0 +1,42 @@
+  schemas:
+    NewGame:
+      type: object
+      properties:
+        game_id:
+          type: string
+
+    ResetGame:
+      type: object
+      properties:
+        result:
+          type: string
+
+    StartGame:
+      type: object
+      properties:
+        game_id:
+          type: string
+        data: 
+          type: object
+          properties:
+            find: 
+              type: string
+            win:
+              type: boolean
+            word:
+              type: string
+
+    GessResult:
+      type: object
+      properties:
+        game_id:
+          type: string
+        data: 
+          type: object
+          properties:
+            find: 
+              type: string
+            win:
+              type: boolean
+            word:
+              type: string
