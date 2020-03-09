@@ -3,7 +3,7 @@ Hangman API methods
 """
 import uuid
 from services import start_game, gess_word, reset_game, new_id
-from repository import new_game
+from repository import game
 
 
 def new():

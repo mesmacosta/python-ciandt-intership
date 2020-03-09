@@ -61,24 +61,3 @@ for index in range(0, len(palavra)):
 
 
 print(list_find)
-
-
-# funcionando
-# novo = dict()
-# for chave, valor in game_start.items():
-# 	if chave == 'data':
-# 		novo[chave] = valor
-#
-# retorno = dict()
-# for chave, valor in novo.items():
-# 	retorno = valor
-#
-# valor_retorno =''
-# for chave, valor in retorno.items():
-# 	if chave == 'word':
-# 		valor_retorno = valor
-# print(valor_retorno)
-#
-# p = input('Informe uma palavra: ')
-# if p in valor_retorno:
-# 	print(True)

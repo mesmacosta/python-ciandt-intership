@@ -23,8 +23,8 @@ swagger_string = _env.get_template("main.yaml").render(
     schemas=get_all_apis_router("schemas", SWAGGER_PATH),
     **get_entity_fields(),
 )
-import pprint
-pprint.pprint(swagger_string)
+# import pprint
+# pprint.pprint(swagger_string)
 
 specification = yaml.safe_load(swagger_string)
 
