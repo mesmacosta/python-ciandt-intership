@@ -44,7 +44,6 @@ class Hangman extends Component {
 						this.setState(st => ({
 							game: result.data,
 						}));
-						this.resetTime()
 					}, 
 				(error) => {
 					console.error('error to fetch start game!')
@@ -104,6 +103,7 @@ class Hangman extends Component {
 					mistake: 0,
 					guessed: guessed
 				});
+				this.resetTime()
 			}
 			else {
 				console.error('error to fetch reset game');
